@@ -1,4 +1,12 @@
-# Flashback-World-Exporter
-Converts Flashback files into Minecraft Worlds
+The downloaded world will be in your saves folder in Minecraft.
 
-Adds a button in the pause menu while in a Flashback recording that lets you export the world of a Flashback recording file.
+This mod adds a button only if you are in a Flashback in the Pause Menu where you can export the world from your Flashback Recording.
+
+Currently Downloads:
+ - Blocks
+ - Block Entities
+ - Entities
+ - Biomes
+
+# Fabric API
+Fabric API is required for this mod to work. You can download it [here](https://modrinth.com/mod/fabric-api).
