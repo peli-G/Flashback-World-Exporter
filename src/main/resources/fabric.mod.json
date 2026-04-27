@@ -1,44 +1,34 @@
 {
-	"schemaVersion": 1,
-	"id": "flashback",
-	"version": "${version}",
-	"name": "Flashback",
-	"description": "Record your gameplay, view the recordings and export cinematic shots",
-	"authors": [
-		"Moulberry"
-	],
-	"contact": {
-		"homepage": "https://flashback.moulberry.com/",
-		"sources": "https://github.com/Moulberry/Flashback"
-	},
-	"license": "https://github.com/Moulberry/Flashback/blob/master/LICENSE.md",
-	"icon": "assets/flashback/icon.png",
-	"environment": "client",
-	"entrypoints": {
-		"main": [
-			"com.moulberry.flashback.Flashback"
-		],
-		"client": [
-			"com.moulberry.flashback.Flashback"
-		],
-		"frex_flawless_frames": [
-			"com.moulberry.flashback.exporting.FrexFlawlessFramesIntegration"
-		],
-		"modmenu": [
-			"com.moulberry.flashback.FlashbackModMenuApiImpl"
-		],
-        "voicechat": [
-            "com.moulberry.flashback.compat.simple_voice_chat.SimpleVoiceChatPlugin"
-        ]
-	},
-	"accessWidener": "flashback.accesswidener",
-	"mixins": [
-		"flashback.mixins.json"
-	],
-	"depends": {
-		"fabricloader": ">=0.15.10",
-		"minecraft": ">=1.21.9 <1.21.11",
-		"java": ">=21",
-		"fabric-api": ">=0.107.0"
-	}
+  "schemaVersion": 1,
+  "id": "flashback_export",
+  "version": "${version}",
+  "name": "Flashback World Export",
+  "description": "Exports Flashback replays directly to singleplayer worlds.",
+  "authors": [],
+  "contact": {},
+  "license": "MIT",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "com.moulberry.flashbackexport.FlashbackExportMod"
+    ],
+    "modmenu": [
+      "com.moulberry.flashbackexport.ModMenuEntry"
+    ]
+  },
+  "mixins": [
+    "flashback_export.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.17.2",
+    "fabric-api": "*",
+    "minecraft": "1.21.10",
+    "flashback": "*"
+  },
+  "custom": {
+    "modmenu": {
+      "parent": "flashback",
+      "badges": []
+    }
+  }
 }

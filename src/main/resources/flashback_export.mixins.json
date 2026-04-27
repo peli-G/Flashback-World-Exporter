@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.moulberry.flashbackexport.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "client": [
+    "MixinPauseScreen"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
