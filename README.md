@@ -10,3 +10,9 @@ Currently Downloads:
 
 # Fabric API
 Fabric API is required for this mod to work. You can download it [here](https://modrinth.com/mod/fabric-api).
+
+# Flashback
+Flashback is required for this mod to work. You can download it [here](https://modrinth.com/mod/flashback). 
+
+# Images
+<img width="1282" height="607" alt="howto" src="https://github.com/user-attachments/assets/6e566910-86af-41ca-83cf-2725d29b6a68" />
