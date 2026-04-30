@@ -45,6 +45,7 @@ public class WorldExporter {
         chunksWritten = 0;
         chunksTotal = 0;
         statusMessage = "Starting export...";
+        sendActionBar("§e> Starting world export...");
 
         Thread exportThread = new Thread(() -> {
             try {
@@ -52,6 +53,7 @@ public class WorldExporter {
             } catch (Exception e) {
                 FlashbackExportMod.LOGGER.error("World export failed", e);
                 statusMessage = "Export failed: " + e.getMessage();
+                sendActionBar("§c> Export failed: " + e.getMessage());
             } finally {
                 isExporting = false;
             }
@@ -83,6 +85,7 @@ public class WorldExporter {
         Files.createDirectories(worldPath);
 
         statusMessage = "Creating world structure...";
+        sendActionBar("§e> Creating world structure...");
 
         // Use player position as spawn
         double spawnX = 0, spawnY = 64, spawnZ = 0;
@@ -124,6 +127,7 @@ public class WorldExporter {
 
         chunksTotal = allChunks.size();
         statusMessage = "Found " + chunksTotal + " chunks, writing...";
+        sendActionBar("§e> Found " + chunksTotal + " chunks, writing...");
 
         for (String sub : List.of("region", "entities")) {
             Files.createDirectories(worldPath.resolve(sub));
@@ -155,8 +159,10 @@ public class WorldExporter {
                 entityWriters.get(eKey).write(pos, buildEntityChunkNbt(entry.chunk()));
 
                 chunksWritten++;
-                if (chunksWritten % 50 == 0) {
-                    statusMessage = "Writing chunks... " + chunksWritten + "/" + chunksTotal;
+                if (chunksWritten % 10 == 0) {
+                    String progress = "§e> Exporting chunks... §f" + chunksWritten + "§7/§f" + chunksTotal;
+                    statusMessage = "Exporting chunks... " + chunksWritten + "/" + chunksTotal;
+                    sendActionBar(progress);
                 }
             }
         } finally {
@@ -167,6 +173,7 @@ public class WorldExporter {
         writePlayerData(worldPath, mc, spawnX, spawnY, spawnZ);
 
         statusMessage = "Done! Saved " + chunksWritten + " chunks to: " + worldName;
+        sendActionBar("§a> Export done! Saved §f" + chunksWritten + "§a chunks to: §f" + worldName);
         FlashbackExportMod.LOGGER.info("World export complete: {} chunks -> {}", chunksWritten, worldPath);
     }
 
@@ -375,6 +382,15 @@ public class WorldExporter {
             NbtIo.writeCompressed(p, worldPath.resolve("playerdata").resolve(mc.player.getUUID() + ".dat"));
         } catch (IOException e) {
             FlashbackExportMod.LOGGER.warn("Failed to write player data", e);
+        }
+    }
+
+    private static void sendActionBar(String message) {
+        Minecraft mc = Minecraft.getInstance();
+        if (mc.gui != null) {
+            mc.execute(() -> mc.gui.setOverlayMessage(
+                net.minecraft.network.chat.Component.literal(message), false
+            ));
         }
     }
 

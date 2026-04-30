@@ -3,9 +3,14 @@
   "id": "flashback_export",
   "version": "${version}",
   "name": "Flashback World Export",
-  "description": "Exports Flashback replays directly to singleplayer worlds.",
-  "authors": [],
-  "contact": {},
+  "description": "Allows you to directly convert Flashback recording files into singleplayer worlds.",
+  "authors": [
+    "peli_G"
+  ],
+  "contact": {
+    "sources": "https://github.com/peli-G/Flashback-World-Exporter",
+    "issues": "https://github.com/peli-G/Flashback-World-Exporter/issues"
+  },
   "license": "MIT",
   "environment": "client",
   "entrypoints": {

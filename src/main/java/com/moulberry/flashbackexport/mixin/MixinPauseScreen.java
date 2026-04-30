@@ -2,6 +2,7 @@ package com.moulberry.flashbackexport.mixin;
 
 import com.moulberry.flashback.Flashback;
 import com.moulberry.flashbackexport.WorldExporter;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.PauseScreen;
@@ -23,29 +24,41 @@ public abstract class MixinPauseScreen extends Screen {
     @Unique
     private boolean fwe$buttonAdded = false;
 
+    @Unique
+    private Button fwe$exportButton = null;
+
     @Inject(method = "createPauseMenu", at = @At("RETURN"))
     public void fwe$addExportButton(CallbackInfo ci) {
         if (!Flashback.isInReplay()) return;
         if (fwe$buttonAdded) return;
         fwe$buttonAdded = true;
 
-        String label = WorldExporter.isExporting
-                ? "Exporting... " + WorldExporter.chunksWritten + "/" + WorldExporter.chunksTotal
-                : "Export World";
-
-        Button btn = Button.builder(Component.literal(label), b -> {
+        fwe$exportButton = Button.builder(Component.literal(fwe$getLabel()), b -> {
             if (!WorldExporter.isExporting) {
                 WorldExporter.startExport();
-                b.setMessage(Component.literal("Exporting..."));
             }
         }).pos(4, this.height - 48).width(120).build();
 
-        btn.setTooltip(Tooltip.create(Component.literal(
-                WorldExporter.isExporting
-                        ? WorldExporter.statusMessage
-                        : "Save all loaded chunks to a singleplayer world"
+        fwe$exportButton.setTooltip(Tooltip.create(Component.literal(
+                "Save all loaded chunks to a singleplayer world"
         )));
 
-        this.addRenderableWidget(btn);
+        this.addRenderableWidget(fwe$exportButton);
+    }
+
+    @Inject(method = "tick", at = @At("HEAD"))
+    public void fwe$tick(CallbackInfo ci) {
+        if (fwe$exportButton == null) return;
+        fwe$exportButton.setMessage(Component.literal(fwe$getLabel()));
+        fwe$exportButton.setTooltip(Tooltip.create(Component.literal(
+                WorldExporter.isExporting ? WorldExporter.statusMessage : "Save all loaded chunks to a singleplayer world"
+        )));
+    }
+
+    @Unique
+    private String fwe$getLabel() {
+        if (!WorldExporter.isExporting) return "Export World";
+        if (WorldExporter.chunksTotal == 0) return "Exporting...";
+        return "Exporting " + WorldExporter.chunksWritten + "/" + WorldExporter.chunksTotal;
     }
 }
