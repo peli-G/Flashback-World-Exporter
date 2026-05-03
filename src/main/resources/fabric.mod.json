@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "flashback_export",
-  "version": "${version}",
+  "version": "1.1.0",
   "name": "Flashback World Export",
   "description": "Allows you to directly convert Flashback recording files into singleplayer worlds.",
   "authors": [
@@ -12,6 +12,7 @@
     "issues": "https://github.com/peli-G/Flashback-World-Exporter/issues"
   },
   "license": "MIT",
+  "icon": "assets/flashback_export/icon.png",
   "environment": "client",
   "entrypoints": {
     "client": [
